@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { SurveyModel } from './models/survey.model';
 import { CreateSurveyDto, UpdateSurveyDto } from './models/survey.dto';
 

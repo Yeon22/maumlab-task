@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { SurveyModule } from './survey/survey.module';
 import { GraphQLError } from 'graphql';
 import { ErrorDto } from './errors/error.dto';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ErrorDto } from './errors/error.dto';
       autoSchemaFile: 'src/schema.gql'
     }),
     SurveyModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

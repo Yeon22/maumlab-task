@@ -30,7 +30,7 @@ export class SurveyResolver {
     @Mutation(returns => String)
     async deleteSurvey(
         @Args('id') id: number
-    ): Promise<any> {
+    ): Promise<string> {
         const deletedTitle = await this.surveyService.delete(id);
         return `설문지 ${deletedTitle} 이/가 삭제되었습니다`;
     }
