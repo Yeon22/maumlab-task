@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { SurveyModule } from './survey/survey.module';
+import { GraphQLError } from 'graphql';
+import { ErrorDto } from './errors/error.dto';
 
 @Module({
   imports: [
@@ -22,6 +24,12 @@ import { SurveyModule } from './survey/survey.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      formatError: (error: GraphQLError): ErrorDto => {
+        const gqlErrorCode = error.extensions?.code as string;
+        const message = error.message;
+
+        return {errorCode: gqlErrorCode, message};
+      },
       autoSchemaFile: 'src/schema.gql'
     }),
     SurveyModule,

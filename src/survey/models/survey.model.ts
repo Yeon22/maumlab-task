@@ -17,6 +17,10 @@ export class SurveyModel {
     description: string;
 
     @Field()
+    @Column({ default: false })
+    finished: boolean;
+
+    @Field()
     @Column({ name: "created_at" })
     @CreateDateColumn()
     createdAt: Date;
