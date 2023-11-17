@@ -23,9 +23,18 @@ type QuestionModel {
   updatedAt: DateTime!
 }
 
+type AnswerModel {
+  id: Float!
+  text: String!
+  score: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   surveys(finished: Boolean): [SurveyModel!]!
   question(id: Float!): QuestionModel!
+  answer(id: Float!): AnswerModel!
 }
 
 type Mutation {
@@ -35,6 +44,9 @@ type Mutation {
   createQuestion(text: String!): QuestionModel!
   updateQuestion(question: UpdateQuestionDto!): QuestionModel!
   deleteQuestion(id: Float!): String!
+  createAnswer(answer: CreateAnswerDto!): AnswerModel!
+  updateAnswer(answer: UpdateAnswerDto!): AnswerModel!
+  deleteAnswer(id: Float!): String!
 }
 
 input CreateSurveyDto {
@@ -51,4 +63,15 @@ input UpdateSurveyDto {
 input UpdateQuestionDto {
   id: Float!
   text: String!
+}
+
+input CreateAnswerDto {
+  text: String!
+  score: Float!
+}
+
+input UpdateAnswerDto {
+  id: Float!
+  text: String
+  score: Float
 }

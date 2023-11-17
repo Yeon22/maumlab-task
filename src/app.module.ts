@@ -10,6 +10,7 @@ import { SurveyModule } from './survey/survey.module';
 import { GraphQLError } from 'graphql';
 import { ErrorDto } from './errors/error.dto';
 import { QuestionModule } from './question/question.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { QuestionModule } from './question/question.module';
     }),
     SurveyModule,
     QuestionModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

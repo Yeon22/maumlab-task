@@ -22,7 +22,7 @@ export class QuestionResolver {
     async updateQuestion(
         @Args('question') question: UpdateQuestionDto
     ): Promise<QuestionModel> {
-        return this.questionService.update(question);
+        return await this.questionService.update(question);
     }
 
     @Mutation(returns => String)
