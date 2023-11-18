@@ -15,7 +15,6 @@ $ docker exec -it [container-id] bash
 $ psql -U postgres
 $ CREATE DATABASE test_db;
 $ CREATE ROLE test_user WITH LOGIN PASSWORD 'test1234';
-$ ALTER USER test_user WITH CREATEDDB;
 $ ALTER USER test_user WITH SUPERUSER;
 $ GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;
 ```

@@ -11,6 +11,7 @@ import { GraphQLError } from 'graphql';
 import { ErrorDto } from './errors/error.dto';
 import { QuestionModule } from './question/question.module';
 import { AnswerModule } from './answer/answer.module';
+import { DistractorModule } from './distractor/distractor.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AnswerModule } from './answer/answer.module';
     SurveyModule,
     QuestionModule,
     AnswerModule,
+    DistractorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

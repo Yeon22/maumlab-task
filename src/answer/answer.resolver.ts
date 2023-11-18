@@ -23,6 +23,16 @@ export class AnswerResolver {
         return await this.answerService.update(answer);
     }
 
+    @Mutation(returns => AnswerModel)
+    async checkAnswer(@Args('id') id: number): Promise<AnswerModel> {
+        return await this.answerService.check(id);
+    }
+
+    @Mutation(returns => AnswerModel)
+    async unCheckAnswer(@Args('id') id: number): Promise<AnswerModel> {
+        return await this.answerService.unCheck(id);
+    }
+
     @Mutation(returns => String)
     async deleteAnswer(@Args('id') id: number): Promise<string> {
         const deleted = await this.answerService.delete(id);

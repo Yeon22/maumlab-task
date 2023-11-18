@@ -2,27 +2,11 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @ObjectType()
-@Entity({ name: 'answer' })
-export class AnswerModel {
+@Entity({ name: 'distractor' })
+export class DistractorModel {
     @Field()
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Field()
-    @Column({ length: 255 })
-    text: string;
-
-    @Field()
-    @Column({ default: 1 })
-    score: number;
-
-    @Field()
-    @Column({ default: false })
-    checked: boolean;
-
-    @Field()
-    @Column({ default: 1 })
-    order: number;
 
     @Field()
     @Column({ name: 'created_at' })

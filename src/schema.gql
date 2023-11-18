@@ -27,6 +27,14 @@ type AnswerModel {
   id: Float!
   text: String!
   score: Float!
+  checked: Boolean!
+  order: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type DistractorModel {
+  id: Float!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -35,6 +43,7 @@ type Query {
   surveys(finished: Boolean): [SurveyModel!]!
   question(id: Float!): QuestionModel!
   answer(id: Float!): AnswerModel!
+  distractor(id: Float!): DistractorModel!
 }
 
 type Mutation {
@@ -46,7 +55,11 @@ type Mutation {
   deleteQuestion(id: Float!): String!
   createAnswer(answer: CreateAnswerDto!): AnswerModel!
   updateAnswer(answer: UpdateAnswerDto!): AnswerModel!
+  checkAnswer(id: Float!): AnswerModel!
+  unCheckAnswer(id: Float!): AnswerModel!
   deleteAnswer(id: Float!): String!
+  createDistractor: DistractorModel!
+  deleteDistractor(id: Float!): String!
 }
 
 input CreateSurveyDto {
@@ -67,11 +80,14 @@ input UpdateQuestionDto {
 
 input CreateAnswerDto {
   text: String!
-  score: Float!
+  score: Float
+  checked: Boolean
+  order: Float
 }
 
 input UpdateAnswerDto {
   id: Float!
   text: String
   score: Float
+  order: Float
 }

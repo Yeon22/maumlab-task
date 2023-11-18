@@ -5,8 +5,14 @@ export class CreateAnswerDto {
     @Field()
     text: string;
 
-    @Field()
+    @Field({ nullable: true })
     score: number;
+
+    @Field({ nullable: true })
+    checked: boolean;
+
+    @Field({ nullable: true })
+    order: number;
 }
 
 @InputType()
@@ -19,4 +25,7 @@ export class UpdateAnswerDto {
 
     @Field({ nullable: true })
     score: number;
+
+    @Field({ nullable: true })
+    order: number;
 }

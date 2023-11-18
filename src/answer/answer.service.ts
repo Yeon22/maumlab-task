@@ -28,6 +28,24 @@ export class AnswerService {
         return this.answerRepository.save(newAnswer);
     }
 
+    async check(id: number): Promise<AnswerModel> {
+        const answer = await this.findOne(id);
+        if (!answer) {
+            throw new BadRequestException('존재하지 않는 답변입니다');
+        }
+
+        return this.answerRepository.save({...answer, checked: true});
+    }
+
+    async unCheck(id: number): Promise<AnswerModel> {
+        const answer = await this.findOne(id);
+        if (!answer) {
+            throw new BadRequestException('존재하지 않는 답변입니다');
+        }
+
+        return this.answerRepository.save({...answer, checked: false});
+    }
+
     async delete(id: number): Promise<string> {
         const answer = await this.findOne(id);
         if (!answer) {
