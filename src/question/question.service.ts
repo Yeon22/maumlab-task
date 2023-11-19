@@ -1,22 +1,35 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { QuestionModel } from './models/question.model';
-import { UpdateQuestionDto } from './models/question.dto';
+import { CreateQuestionDto, UpdateQuestionDto } from './models/question.dto';
+import { SurveyService } from 'src/survey/survey.service';
 
 @Injectable()
 export class QuestionService {
     constructor(
-        @InjectRepository(QuestionModel)
-        private readonly questionRepository: Repository<QuestionModel>
+        @InjectRepository(QuestionModel) private readonly questionRepository: Repository<QuestionModel>,
+        @Inject(SurveyService) private readonly surveyService: SurveyService
     ) {}
 
-    findOne(id: number): Promise<QuestionModel> {
-        return this.questionRepository.findOne({where: {id}})
+    findAll(): Promise<QuestionModel[]> {
+        return this.questionRepository.find({
+            order: {order: 'ASC'},
+            relations: {survey: true}
+        });
     }
 
-    create(text: string): Promise<QuestionModel> {
-        return this.questionRepository.save({text});
+    findOne(id: number): Promise<QuestionModel> {
+        return this.questionRepository.findOne({
+            where: {id},
+            relations: {survey: true},
+        });
+    }
+
+    async create(question: CreateQuestionDto): Promise<QuestionModel> {
+        const survey = await this.surveyService.findOne(question.surveyId);
+        const newQuestion = {...question, survey};
+        return this.questionRepository.save({...newQuestion});
     }
 
     async update(question: UpdateQuestionDto): Promise<QuestionModel> {

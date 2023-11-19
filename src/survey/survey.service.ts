@@ -12,11 +12,18 @@ export class SurveyService {
     ) {}
 
     findAll(finished: boolean = false): Promise<SurveyModel[]> {
-        return this.surveyRepository.find({where: {finished}});
+        return this.surveyRepository.find({
+                where: {finished},
+                relations: {questions: true},
+                order: {questions: {order: 'ASC'}}
+            });
     }
 
     findOne(id: number): Promise<SurveyModel> {
-        return this.surveyRepository.findOne({where: {id}})
+        return this.surveyRepository.findOne({
+            where: {id},
+            relations: {questions: true}
+        });
     }
 
     create(survey: CreateSurveyDto): Promise<SurveyModel> {
