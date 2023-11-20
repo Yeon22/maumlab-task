@@ -9,14 +9,14 @@ export class DistractorResolver {
         @Inject(DistractorService) private distractorService: DistractorService
     ) {}
 
-    @Query(returns => DistractorModel)
+    @Query(returns => DistractorModel, {nullable: true})
     async distractor(@Args('id') id: number): Promise<DistractorModel> {
         return await this.distractorService.findOne(id);
     }
 
     @Mutation(returns => DistractorModel)
-    async createDistractor(): Promise<DistractorModel> {
-        return await this.distractorService.create();
+    async createDistractor(@Args('questionId', {nullable: true}) questionId?: number): Promise<DistractorModel> {
+        return await this.distractorService.create(questionId);
     }
 
     @Mutation(returns => String)

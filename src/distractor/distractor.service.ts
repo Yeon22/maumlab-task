@@ -10,11 +10,15 @@ export class DistractorService {
     ) {}
 
     findOne(id: number): Promise<DistractorModel> {
-        return this.distractorRepository.findOne({where: {id}});
+        return this.distractorRepository.findOne({
+            where: {id},
+            relations: {question: true}
+        });
     }
 
-    create(): Promise<DistractorModel> {
-        return this.distractorRepository.save({});
+    create(questionId?: number): Promise<DistractorModel> {
+        const newDistractor = questionId ? {question: {id: questionId}} : {};
+        return this.distractorRepository.save(newDistractor);
     }
 
     async delete(id: number): Promise<number> {

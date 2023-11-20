@@ -38,6 +38,7 @@ type AnswerModel {
 
 type DistractorModel {
   id: Float!
+  question: QuestionModel!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -47,7 +48,7 @@ type Query {
   questions: [QuestionModel!]!
   question(id: Float!): QuestionModel!
   answer(id: Float!): AnswerModel!
-  distractor(id: Float!): DistractorModel!
+  distractor(id: Float!): DistractorModel
 }
 
 type Mutation {
@@ -62,7 +63,7 @@ type Mutation {
   checkAnswer(id: Float!): AnswerModel!
   unCheckAnswer(id: Float!): AnswerModel!
   deleteAnswer(id: Float!): String!
-  createDistractor: DistractorModel!
+  createDistractor(questionId: Float): DistractorModel!
   deleteDistractor(id: Float!): String!
 }
 
