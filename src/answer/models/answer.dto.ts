@@ -5,6 +5,9 @@ export class CreateAnswerDto {
     @Field()
     text: string;
 
+    @Field()
+    questionId: number;
+
     @Field({ nullable: true })
     score: number;
 
@@ -28,4 +31,7 @@ export class UpdateAnswerDto {
 
     @Field({ nullable: true })
     order: number;
+
+    @Field({ nullable: true })
+    questionId: number;
 }

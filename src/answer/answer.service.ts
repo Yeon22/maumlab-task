@@ -1,30 +1,48 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AnswerModel } from './models/answer.model';
 import { Repository } from 'typeorm';
 import { CreateAnswerDto, UpdateAnswerDto } from './models/answer.dto';
+import { QuestionService } from 'src/question/question.service';
 
 @Injectable()
 export class AnswerService {
     constructor(
-        @InjectRepository(AnswerModel) private readonly answerRepository: Repository<AnswerModel>
+        @InjectRepository(AnswerModel) private readonly answerRepository: Repository<AnswerModel>,
+        @Inject(QuestionService) private readonly questionService: QuestionService
     ) {}
 
-    findOne(id: number): Promise<AnswerModel> {
-        return this.answerRepository.findOne({where: {id}});
+    findAll(): Promise<AnswerModel[]> {
+        return this.answerRepository.find({relations: {question: true}});
     }
 
-    create(answer: CreateAnswerDto): Promise<AnswerModel> {
-        return this.answerRepository.save({...answer});
+    findOne(id: number): Promise<AnswerModel> {
+        return this.answerRepository.findOne({
+            where: {id},
+            relations: {question: true}
+        });
+    }
+
+    async create(answer: CreateAnswerDto): Promise<AnswerModel> {
+        const question = await this.questionService.findOne(answer.questionId);
+        if (!question) {
+            throw new BadRequestException('존재하지 않는 문항입니다');
+        }
+        return this.answerRepository.save({...answer, question});
     }
 
     async update(answer: UpdateAnswerDto): Promise<AnswerModel> {
+        const question = await this.questionService.findOne(answer.questionId);
+        if (!question) {
+            throw new BadRequestException('존재하지 않는 문항입니다');
+        }
+
         const originAnswer = await this.findOne(answer.id);
         if (!originAnswer) {
             throw new BadRequestException('존재하지 않는 답변입니다');
         }
 
-        const newAnswer = {...originAnswer, ...answer};
+        const newAnswer = {...originAnswer, ...answer, question};
         return this.answerRepository.save(newAnswer);
     }
 

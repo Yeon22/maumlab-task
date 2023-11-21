@@ -1,6 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { AnswerModel } from "src/answer/models/answer.model";
 import { SurveyModel } from "src/survey/models/survey.model";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @ObjectType()
 @Entity({ name: 'question' })
@@ -20,6 +21,10 @@ export class QuestionModel {
     @Field(type => SurveyModel, { nullable: true })
     @ManyToOne(type => SurveyModel, survey => survey.questions)
     survey: SurveyModel;
+
+    @Field(() => [AnswerModel], {nullable: true})
+    @OneToMany(() => AnswerModel, answer => answer.question)
+    answers: AnswerModel[];
 
     @Field()
     @Column({ name: 'created_at' })

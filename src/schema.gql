@@ -2,11 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type QuestionModel {
+type AnswerModel {
   id: Float!
   text: String!
+  score: Float!
+  checked: Boolean!
   order: Float!
-  survey: SurveyModel
+  question: QuestionModel
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -16,22 +18,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type QuestionModel {
+  id: Float!
+  text: String!
+  order: Float!
+  survey: SurveyModel
+  answers: [AnswerModel!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type SurveyModel {
   id: Float!
   title: String!
   description: String!
   finished: Boolean!
   questions: [QuestionModel!]
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type AnswerModel {
-  id: Float!
-  text: String!
-  score: Float!
-  checked: Boolean!
-  order: Float!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -47,7 +49,8 @@ type Query {
   surveys(finished: Boolean): [SurveyModel!]!
   questions: [QuestionModel!]!
   question(id: Float!): QuestionModel!
-  answer(id: Float!): AnswerModel!
+  answers: [AnswerModel!]
+  answer(id: Float!): AnswerModel
   distractor(id: Float!): DistractorModel
 }
 
@@ -93,6 +96,7 @@ input UpdateQuestionDto {
 
 input CreateAnswerDto {
   text: String!
+  questionId: Float!
   score: Float
   checked: Boolean
   order: Float
@@ -103,4 +107,5 @@ input UpdateAnswerDto {
   text: String
   score: Float
   order: Float
+  questionId: Float
 }

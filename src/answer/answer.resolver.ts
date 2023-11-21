@@ -8,7 +8,12 @@ import { CreateAnswerDto, UpdateAnswerDto } from './models/answer.dto';
 export class AnswerResolver {
     constructor(@Inject(AnswerService) private answerService: AnswerService) {}
 
-    @Query(returns => AnswerModel)
+    @Query(returns => [AnswerModel], {nullable: true})
+    async answers(): Promise<AnswerModel[]> {
+        return await this.answerService.findAll();
+    }
+
+    @Query(returns => AnswerModel, {nullable: true})
     async answer(@Args('id') id: number): Promise<AnswerModel> {
         return await this.answerService.findOne(id);
     }

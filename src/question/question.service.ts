@@ -33,12 +33,17 @@ export class QuestionService {
     }
 
     async update(question: UpdateQuestionDto): Promise<QuestionModel> {
+        const survey = await this.surveyService.findOne(question.surveyId);
+        if (!survey) {
+            throw new BadRequestException('존재하지 않는 설문지입니다');
+        }
+
         const originQuestion = await this.findOne(question.id);
         if (!originQuestion) {
             throw new BadRequestException('존재하지 않는 항목입니다');
         }
 
-        const newQuestion = {...originQuestion, ...question};
+        const newQuestion = {...originQuestion, ...question, survey};
         return this.questionRepository.save(newQuestion);
     }
 
