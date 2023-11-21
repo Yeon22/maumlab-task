@@ -58,6 +58,7 @@ type Query {
 
 type Mutation {
   createSurvey(survey: CreateSurveyDto!): SurveyModel!
+  finishSurvey(id: Float!): SurveyModel!
   updateSurvey(survey: UpdateSurveyDto!): SurveyModel!
   deleteSurvey(id: Float!): String!
   createQuestion(question: CreateQuestionDto!): QuestionModel!

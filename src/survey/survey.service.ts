@@ -33,6 +33,15 @@ export class SurveyService {
         });
     }
 
+    async finish(id: number): Promise<SurveyModel> {
+        const survey = await this.findOne(id);
+        if (!survey) {
+            throw new BadRequestException('존재하지 않는 설문지입니다');
+        }
+
+        return this.surveyRepository.save({...survey, finished: true});
+    }
+
     async update(survey: UpdateSurveyDto): Promise<SurveyModel> {
         const originSurvey = await this.findOne(survey.id);
         if (!originSurvey) {

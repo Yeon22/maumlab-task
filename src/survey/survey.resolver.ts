@@ -21,6 +21,11 @@ export class SurveyResolver {
     }
 
     @Mutation(returns => SurveyModel)
+    async finishSurvey(@Args('id') id: number): Promise<SurveyModel> {
+        return await this.surveyService.finish(id);
+    }
+
+    @Mutation(returns => SurveyModel)
     async updateSurvey(
         @Args('survey') survey: UpdateSurveyDto
     ): Promise<SurveyModel> {
