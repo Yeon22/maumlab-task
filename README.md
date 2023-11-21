@@ -2,6 +2,10 @@
 
 마음연구소 백엔드 과제
 
+## ERD
+
+![ERD 스크린샷](./static/ERD_screenshot.png)
+
 ## DB 세팅
 
 ```bash
