@@ -15,19 +15,27 @@ export class QuestionService {
     findAll(): Promise<QuestionModel[]> {
         return this.questionRepository.find({
             order: {order: 'ASC'},
-            relations: {survey: true}
+            relations: {
+                survey: true, distractor: true, answers: true
+            }
         });
     }
 
     findOne(id: number): Promise<QuestionModel> {
         return this.questionRepository.findOne({
             where: {id},
-            relations: {survey: true},
+            relations: {
+                survey: true, distractor: true, answers: true
+            }
         });
     }
 
     async create(question: CreateQuestionDto): Promise<QuestionModel> {
         const survey = await this.surveyService.findOne(question.surveyId);
+        if (!survey) {
+            throw new BadRequestException('존재하지 않는 설문지입니다');
+        }
+        
         const newQuestion = {...question, survey};
         return this.questionRepository.save({...newQuestion});
     }

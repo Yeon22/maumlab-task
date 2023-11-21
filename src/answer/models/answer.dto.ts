@@ -9,6 +9,9 @@ export class CreateAnswerDto {
     questionId: number;
 
     @Field({ nullable: true })
+    distractorId: number;
+
+    @Field({ nullable: true })
     score: number;
 
     @Field({ nullable: true })
@@ -34,4 +37,7 @@ export class UpdateAnswerDto {
 
     @Field({ nullable: true })
     questionId: number;
+
+    @Field({ nullable: true })
+    distractorId: number;
 }

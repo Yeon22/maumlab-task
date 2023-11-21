@@ -9,8 +9,8 @@ export class DistractorModel {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field()
-    @OneToOne(() => QuestionModel)
+    @Field(() => QuestionModel)
+    @OneToOne(() => QuestionModel, question => question.distractor)
     @JoinColumn()
     question: QuestionModel;
 

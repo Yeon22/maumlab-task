@@ -2,13 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AnswerModel {
+type DistractorModel {
   id: Float!
-  text: String!
-  score: Float!
-  checked: Boolean!
-  order: Float!
-  question: QuestionModel
+  question: QuestionModel!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -17,6 +13,18 @@ type AnswerModel {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type AnswerModel {
+  id: Float!
+  text: String!
+  score: Float!
+  checked: Boolean!
+  order: Float!
+  question: QuestionModel
+  distractor: DistractorModel
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
 
 type QuestionModel {
   id: Float!
@@ -38,19 +46,13 @@ type SurveyModel {
   updatedAt: DateTime!
 }
 
-type DistractorModel {
-  id: Float!
-  question: QuestionModel!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 type Query {
   surveys(finished: Boolean): [SurveyModel!]!
   questions: [QuestionModel!]!
   question(id: Float!): QuestionModel!
   answers: [AnswerModel!]
   answer(id: Float!): AnswerModel
+  distractors: [DistractorModel!]
   distractor(id: Float!): DistractorModel
 }
 
@@ -66,7 +68,8 @@ type Mutation {
   checkAnswer(id: Float!): AnswerModel!
   unCheckAnswer(id: Float!): AnswerModel!
   deleteAnswer(id: Float!): String!
-  createDistractor(questionId: Float): DistractorModel!
+  createDistractor(questionId: Float!): DistractorModel!
+  updateDistractor(distractor: UpdateDistractorDto!): DistractorModel!
   deleteDistractor(id: Float!): String!
 }
 
@@ -97,6 +100,7 @@ input UpdateQuestionDto {
 input CreateAnswerDto {
   text: String!
   questionId: Float!
+  distractorId: Float
   score: Float
   checked: Boolean
   order: Float
@@ -108,4 +112,10 @@ input UpdateAnswerDto {
   score: Float
   order: Float
   questionId: Float
+  distractorId: Float
+}
+
+input UpdateDistractorDto {
+  id: Float!
+  questionId: Float!
 }
